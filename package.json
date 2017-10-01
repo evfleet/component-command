@@ -1,0 +1,29 @@
+{
+  "name": "component-command",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Evan Fleet",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node_modules/.bin/webpack -w"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "component": "./dist/index.js"
+  },
+  "dependencies": {
+    "commander": "^2.11.0",
+    "fs-extra": "^4.0.2",
+    "inquirer": "^3.3.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
+    "nodemon": "^1.12.1",
+    "webpack": "^3.6.0",
+    "webpack-node-externals": "^1.6.0"
+  }
+}
