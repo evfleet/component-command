@@ -59,3 +59,4 @@ typings/
 
 # app
 dist/
+component.json

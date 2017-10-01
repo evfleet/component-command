@@ -31,6 +31,9 @@ module.exports = {
       }
     ]
   },
+  resolve: {
+    modules: ['./src/', 'node_modules']
+  },
   plugins: [
     new webpack.BannerPlugin({
       banner: '#!/usr/bin/env node',

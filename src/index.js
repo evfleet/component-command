@@ -2,6 +2,8 @@ import path from 'path';
 import fs from 'fs-extra';
 import program from 'commander';
 
+import configTemplate from 'templates/config';
+
 const currentDir = process.cwd();
 
 program
@@ -15,7 +17,7 @@ program
       if (exists) {
         console.info('exists');
       } else {
-        await fs.writeJson(configFile, { test: true }, { spaces: 2 })
+        await fs.writeJson(configFile, configTemplate, { spaces: 2 })
       }
     } catch (error) {
       console.log(error);

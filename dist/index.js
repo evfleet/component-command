@@ -92,6 +92,10 @@ var _commander = __webpack_require__(5);
 
 var _commander2 = _interopRequireDefault(_commander);
 
+var _config = __webpack_require__(6);
+
+var _config2 = _interopRequireDefault(_config);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var currentDir = process.cwd();
@@ -121,7 +125,7 @@ _commander2.default.command('init').option('-y --yes', 'say yes to all options w
 
         case 9:
           _context.next = 11;
-          return _fsExtra2.default.writeJson(configFile, { test: true }, { spaces: 2 });
+          return _fsExtra2.default.writeJson(configFile, _config2.default, { spaces: 2 });
 
         case 11:
           _context.next = 16;
@@ -228,6 +232,20 @@ module.exports = require("fs-extra");
 /***/ (function(module, exports) {
 
 module.exports = require("commander");
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  test: true
+};
 
 /***/ })
 /******/ ]);
