@@ -58,6 +58,5 @@ typings/
 .env
 
 # app
-dist/
-dist/index.js
+dist
 component.json
