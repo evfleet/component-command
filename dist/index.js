@@ -129,7 +129,7 @@ _commander2.default.command('init').option('-y --yes', 'say yes to all options w
 
         case 9:
           _context.next = 11;
-          return _fsExtra2.default.writeJson(configFile, configTemplate, { spaces: 2 });
+          return _fsExtra2.default.writeJson(configFile, _templates2.default.config, { spaces: 2 });
 
         case 11:
           _context.next = 16;

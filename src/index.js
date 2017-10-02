@@ -17,7 +17,7 @@ program
       if (exists) {
         console.info('exists');
       } else {
-        await fs.writeJson(configFile, configTemplate, { spaces: 2 })
+        await fs.writeJson(configFile, templates.config, { spaces: 2 })
       }
     } catch (error) {
       console.log(error);

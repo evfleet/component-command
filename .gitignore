@@ -59,4 +59,5 @@ typings/
 
 # app
 dist/
+dist/index.js
 component.json
