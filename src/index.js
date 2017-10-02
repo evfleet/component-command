@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs-extra';
 import program from 'commander';
 
-import configTemplate from 'templates/config';
+import templates from 'templates';
 
 const currentDir = process.cwd();
 
@@ -25,42 +25,39 @@ program
   });
 
 program
-  .command('create [components...]')
+  .command('generate [components...]')
   // .alias('c')
-  .option('-f, --folder', 'create a folder with an index.js exporting component')
-  .action(async function(components) {
+  .option('-b, --base <base>', 'base folder to append to all components')
+  .action(async function(components, options) {
     try {
-      const config = await fs.readJson(`${currentDir}/config.json`);
+      components.map(async (componentPath) => {
+        const baseURL = this.base ? `${this.base}/` : '';
+        const { folderPath, componentName } = splitString(componentPath);
 
-      console.log(config);
-
+        await Promise.all([
+          fs.outputFile(`${baseURL}${componentPath}/index.js`, templates.entry.replace(/%n/g, componentName)),
+          fs.outputFile(`${baseURL}${componentPath}/${componentName}.js`, templates.file.replace(/%n/g, componentName))
+        ])
+      });
     } catch (error) {
       console.log('error', error);
     }
-
-    /*
-    fs.readJson(`${currentDir}/config.json`).then((config) => {
-      console.log(config);
-    }).catch((error) => {
-      console.log(error);
-    })
-
-    if (!this.folder) {
-
-
-      console.log('no folders');
-
-    } else {
-      console.log('create the folders');
-    }
-
-
-
-    console.log(components)
-    */
   });
 
 program.parse(process.argv);
+
+function splitString(component) {
+  if (component.includes('/')) {
+    return {
+      folderPath: component.substring(0, component.lastIndexOf('/') + 1),
+      componentName: component.substring(component.lastIndexOf('/') + 1)
+    }
+  } else {
+    return {
+      componentName: component
+    }
+  }
+}
 
 
 

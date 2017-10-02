@@ -72,6 +72,10 @@ module.exports =
 "use strict";
 
 
+var _promise = __webpack_require__(7);
+
+var _promise2 = _interopRequireDefault(_promise);
+
 var _regenerator = __webpack_require__(1);
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
@@ -92,9 +96,9 @@ var _commander = __webpack_require__(5);
 
 var _commander2 = _interopRequireDefault(_commander);
 
-var _config = __webpack_require__(6);
+var _templates = __webpack_require__(10);
 
-var _config2 = _interopRequireDefault(_config);
+var _templates2 = _interopRequireDefault(_templates);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -125,7 +129,7 @@ _commander2.default.command('init').option('-y --yes', 'say yes to all options w
 
         case 9:
           _context.next = 11;
-          return _fsExtra2.default.writeJson(configFile, _config2.default, { spaces: 2 });
+          return _fsExtra2.default.writeJson(configFile, configTemplate, { spaces: 2 });
 
         case 11:
           _context.next = 16;
@@ -145,63 +149,73 @@ _commander2.default.command('init').option('-y --yes', 'say yes to all options w
   }, _callee, this, [[0, 13]]);
 })));
 
-_commander2.default.command('create [components...]')
+_commander2.default.command('generate [components...]')
 // .alias('c')
-.option('-f, --folder', 'create a folder with an index.js exporting component').action(function () {
-  var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(components) {
-    var config;
-    return _regenerator2.default.wrap(function _callee2$(_context2) {
+.option('-b, --base <base>', 'base folder to append to all components').action(function () {
+  var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(components, options) {
+    var _this = this;
+
+    return _regenerator2.default.wrap(function _callee3$(_context3) {
       while (1) {
-        switch (_context2.prev = _context2.next) {
+        switch (_context3.prev = _context3.next) {
           case 0:
-            _context2.prev = 0;
-            _context2.next = 3;
-            return _fsExtra2.default.readJson(currentDir + '/config.json');
+            try {
+              components.map(function () {
+                var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(componentPath) {
+                  var baseURL, _splitString, folderPath, componentName;
 
-          case 3:
-            config = _context2.sent;
+                  return _regenerator2.default.wrap(function _callee2$(_context2) {
+                    while (1) {
+                      switch (_context2.prev = _context2.next) {
+                        case 0:
+                          baseURL = _this.base ? _this.base + '/' : '';
+                          _splitString = splitString(componentPath), folderPath = _splitString.folderPath, componentName = _splitString.componentName;
+                          _context2.next = 4;
+                          return _promise2.default.all([_fsExtra2.default.outputFile('' + baseURL + componentPath + '/index.js', _templates2.default.entry.replace(/%n/g, componentName)), _fsExtra2.default.outputFile('' + baseURL + componentPath + '/' + componentName + '.js', _templates2.default.file.replace(/%n/g, componentName))]);
 
+                        case 4:
+                        case 'end':
+                          return _context2.stop();
+                      }
+                    }
+                  }, _callee2, _this);
+                }));
 
-            console.log(config);
+                return function (_x3) {
+                  return _ref3.apply(this, arguments);
+                };
+              }());
+            } catch (error) {
+              console.log('error', error);
+            }
 
-            _context2.next = 10;
-            break;
-
-          case 7:
-            _context2.prev = 7;
-            _context2.t0 = _context2['catch'](0);
-
-            console.log('error', _context2.t0);
-
-          case 10:
+          case 1:
           case 'end':
-            return _context2.stop();
+            return _context3.stop();
         }
       }
-    }, _callee2, this, [[0, 7]]);
+    }, _callee3, this);
   }));
 
-  return function (_x) {
+  return function (_x, _x2) {
     return _ref2.apply(this, arguments);
   };
-}()
-
-/*
-fs.readJson(`${currentDir}/config.json`).then((config) => {
-  console.log(config);
-}).catch((error) => {
-  console.log(error);
-})
- if (!this.folder) {
-    console.log('no folders');
- } else {
-  console.log('create the folders');
-}
-   console.log(components)
-*/
-);
+}());
 
 _commander2.default.parse(process.argv);
+
+function splitString(component) {
+  if (component.includes('/')) {
+    return {
+      folderPath: component.substring(0, component.lastIndexOf('/') + 1),
+      componentName: component.substring(component.lastIndexOf('/') + 1)
+    };
+  } else {
+    return {
+      componentName: component
+    };
+  }
+}
 
 /***/ }),
 /* 1 */
@@ -246,6 +260,69 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
   test: true
 };
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+module.exports = require("babel-runtime/core-js/promise");
+
+/***/ }),
+/* 8 */,
+/* 9 */,
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _file = __webpack_require__(11);
+
+var _file2 = _interopRequireDefault(_file);
+
+var _entry = __webpack_require__(12);
+
+var _entry2 = _interopRequireDefault(_entry);
+
+var _config = __webpack_require__(6);
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  file: _file2.default,
+  entry: _entry2.default,
+  config: _config2.default
+};
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = "import React, { Component } from 'react';\n\nclass %n extends Component {\n  render() {\n    return (\n      <div>\n        %n\n      </div>\n    )\n  }\n}\n\nexport default %n;\n";
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = "export { default } from './%n';";
 
 /***/ })
 /******/ ]);
