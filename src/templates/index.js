@@ -1,9 +1,20 @@
-import file from './file';
-import entry from './entry';
-import config from './config';
+import dedent from 'dedent';
 
-export default {
-  file,
-  entry,
-  config
-}
+export const entryTemplate = `export { default } from './%n';`;
+
+export const fileTemplate = dedent`
+  import React, { Component } from 'react';
+
+  class %n extends Component {
+    render() {
+      return (
+        <div>
+          %n
+        </div>
+      )
+    }
+  }
+
+  export default %n;
+`;
+

@@ -2,9 +2,7 @@ import path from 'path';
 import fs from 'fs-extra';
 import program from 'commander';
 
-import templates from 'templates';
-
-const currentDir = process.cwd();
+import { entryTemplate, fileTemplate } from 'templates';
 
 program
   .command('init')
@@ -35,8 +33,8 @@ program
         const { folderPath, componentName } = splitString(componentPath);
 
         await Promise.all([
-          fs.outputFile(`${baseURL}${componentPath}/index.js`, templates.entry.replace(/%n/g, componentName)),
-          fs.outputFile(`${baseURL}${componentPath}/${componentName}.js`, templates.file.replace(/%n/g, componentName))
+          fs.outputFile(`${baseURL}${componentPath}/index.js`, entryTemplate.replace(/%n/g, componentName)),
+          fs.outputFile(`${baseURL}${componentPath}/${componentName}.js`, fileTemplate.replace(/%n/g, componentName))
         ])
       });
     } catch (error) {
